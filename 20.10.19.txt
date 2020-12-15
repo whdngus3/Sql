@@ -1,0 +1,84 @@
+conn system/1234
+alter user hr identified by 1234;
+conn hr/1234
+
+#사이즈조정
+set linesize 200
+column content format a50;
+column content subject format a30;
+
+
+select * from tab;
+select * from department_name;
+select * from employees;
+
+
+#유저보기
+show user
+
+
+#테이블 만들기
+
+create table a (oder number not null,menu varchar2(20), price varchar2(20));
+insert into a values(1,'bob','1,000');
+update a set menu='bibim' where oder=1;
+create table b(id int, ingrediant varchar2(20));
+insert into a values(2,'jobche','1,200');
+insert into b values(1,'egg');
+
+
+update a set name ='whdngus' where id='whdngus'
+
+select * from a left join b on a.oder=b.id;
+
+select * from a where menu like a
+column firstname format a30;
+column lastname format a30;
+
+
+
+
+
+
+
+###########pk fk
+
+CREATE TABLE Persons (
+    ID int NOT NULL PRIMARY KEY,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int
+);
+
+
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    CONSTRAINT FK_PersonOrder FOREIGN KEY (PersonID)
+    REFERENCES Persons(ID)
+);
+
+
+
+###rownum
+select rownum,persons. * from persons;
+
+
+
+
+
+
+
+######date
+create table t_date (f_date date);
+insert into t_date values('2020-12-12');
+select * from t_date;
+
+
+
+
+####통계량
+select min(salary),max(salary),avg(salary) from employees;

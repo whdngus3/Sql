@@ -1,0 +1,37 @@
+conn system/1234;
+
+create user usertest01 identified by pass1;
+
+grant create session to usertest01;
+
+conn usertest01/pass1;
+
+conn system/1234;
+grant create table to usertest01;
+conn usertest01/pass1;
+create table sampletbl(memo varchar2(50));
+
+select username, default_tablespace from dba_users where username in 'USERTEST01';
+
+alter user usertest01 quota 2m on system;
+
+
+alter user system identified by 1234;
+
+create user usertest03 identified by pass3;
+
+grant create sesstion, create table, create view to usertest03;
+
+grant select on hr.employee to usertest02 with grant option;
+
+conn usertest02/1234;
+
+grant select on hr.employee to usertest01;
+0
+conn hr/1234;
+
+grant select on hr.employee to usertest03;
+
+conn usertest03/pass3;
+
+grant select on hr.employee to usertest01;

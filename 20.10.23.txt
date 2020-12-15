@@ -1,0 +1,171 @@
+alter table employee drop constraint  FK_DNO;
+ 
+alter table employee add constraint FK_DNO foreign key (DNO) references department (DNO);
+
+drop table employee;
+
+CREATE TABLE EMPLOYEE 
+(ENO int PRIMARY KEY,
+ENAME VARCHAR(10),
+JOB VARCHAR(9),
+MANAGER int,
+HIREDATE DATE,
+SALARY int,
+COMMISSION int,
+DNO int, 
+FOREIGN KEY (DNO) REFERENCES DEPARTMENT(DNO)); 
+
+
+INSERT INTO EMPLOYEE VALUES
+(7369,'SMITH','CLERK', 7902,'1980-12-17',800,NULL,20);
+​
+INSERT INTO EMPLOYEE VALUES
+(7499,'ALLEN','SALESMAN', 7698,'1981-2-20',1600,300,30);
+
+INSERT INTO EMPLOYEE VALUES
+(7521,'WARD','SALESMAN', 7698,'1981-2-22',1250,500,30);
+
+INSERT INTO EMPLOYEE VALUES
+(7566,'JONES','MANAGER', 7839,'1981-4-2',2975,NULL,20);
+
+INSERT INTO EMPLOYEE VALUES
+(7654,'MARTIN','SALESMAN',7698,'1981-9-28',1250,1400,30);
+
+INSERT INTO EMPLOYEE VALUES
+(7698,'BLAKE','MANAGER', 7839,'1981-5-1',2850,NULL,30);
+
+INSERT INTO EMPLOYEE VALUES
+(7782,'CLARK','MANAGER', 7839,'1981-6-9',2450,NULL,10);
+
+INSERT INTO EMPLOYEE VALUES
+(7788,'SCOTT','ANALYST', 7566,'1987-07-13',3000,NULL,20);
+
+INSERT INTO EMPLOYEE VALUES
+(7839,'KING','PRESIDENT', NULL,'1987-11-17',5000,NULL,10);
+
+INSERT INTO EMPLOYEE VALUES
+(7844,'TURNER','SALESMAN',7698,'1981-9-8',1500,0,30);
+
+INSERT INTO EMPLOYEE VALUES
+(7876,'ADAMS','CLERK', 7788,'1987-07-13',1100,NULL,20);
+
+INSERT INTO EMPLOYEE VALUES
+(7900,'JAMES','CLERK', 7698,'1981-12-3',950,NULL,30);
+
+INSERT INTO EMPLOYEE VALUES
+(7902,'FORD','ANALYST', 7566,'1981-12-3',3000,NULL,20);
+
+INSERT INTO EMPLOYEE VALUES
+(7934,'MILLER','CLERK', 7782,'1982-1-23',1300,NULL,10);
+
+
+
+
+
+create table salgrade(grade int, losal int, hisal int);
+
+insert into salgrade values(1,700,1200);
+insert into salgrade values(2,1201,1400);
+insert into salgrade values(3,1401,2000);
+insert into salgrade values(4,2001,3000);
+insert into salgrade values(5,3001,9999);
+
+
+select * from salgrade;
+
+----------------------------------------------------------------------------
+
+create database b;
+
+use b;
+
+create table department (dno int, dname varchar(14), loc varchar(13));
+
+insert into department values(10,'accounting', 'new york');
+insert into department values(20,'research','dallas');
+insert into department values(30, 'sales','seoul');
+insert into department values(30, 'manager','london');
+
+select * from department;
+
+
+
+create table dept20 as select * from department;
+select * from dept20;
+
+alter table dept20 add(birth date);
+select * from dept20;
+
+update dept20 set birth='1995-12-29' where dno=10;
+
+desc dept20;
+
+
+select table_name from user_tables;
+
+select owner, table_name from all_tables;
+
+
+drop table dept;
+create table dept(dno number(2), dname varchar2(14), loc varchar2(13));
+
+drop table emp;
+create table emp(eno number(4), ename varchar2(10), dno number(2));
+
+alter table emp modify ename varchar2(25);
+
+alter table dept set unused (loc);
+
+desc dept;
+
+alter table dept drop unused columns;
+
+create table dept_copy as select * from department where 0=1;
+
+
+select * from dept_copy;
+
+insert into dept_copy values (10, 'Accounting','New York');
+
+insert into dept_copy(dno,loc,dname)values(20,'DALLAS','RESEARCH');
+
+
+insert into dept_copy values(30,null,'SALES');
+
+select length(loc) from dept_copy where dname is null;
+
+update dept_copy set loc='CHICAGO' where dno=30;
+
+insert into dept_copy values(50,'hhh','ddd');
+
+
+
+
+---------------------------------------
+drop table emp_insert;
+create table EMP_INSERT as select * from employee where 1=0 ;
+
+insert into emp_insert values(1,'jowoo','student',null,sysdate,270,230,10);
+
+select * from emp_insert;
+
+insert into emp_insert values(2,'heeju','human',null,to_date(sysdate,'yyyy/mm/dd'),1150,null,20);
+
+create table emp_copy as select * from employee;
+
+update emp_copy set dno=10 where eno=7788;
+
+update emp_copy set (job,salary)= (select job,salary from emp_copy where eno=7499) where eno=7788;
+
+update emp_copy set dno = (select dno from emp_copy where eno=7369) where job = (select job from emp_copy where eno=7369);
+
+
+create table dept_copy as select * from department;
+
+delete from dept_copy where dname='RESEARCH';
+
+delete from dept_copy where dno=10 or dno=40;
+
+select * from dept_copy;
+
+

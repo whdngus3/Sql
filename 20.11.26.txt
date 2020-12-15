@@ -1,0 +1,69 @@
+1. driver load 
+   Class.forName(driver);
+2. DB연결
+    url : 데이터베이스가 있는 주소
+    Connection conn = DriverManger.getConnection(url,아이디, 암호);
+3. sql문장을 사용할 객체 생성
+   Statement stmt = conn.createStatement();
+   PreparedStatement pstmt = conn.prepareStatement(sql);
+   pstmt.setInt(번호, 값);
+   pstmt.setString(번호, 값);
+   pstmt.setDate(번호, 값);
+4. 실행
+   1) 조회
+      ResultSet rs = stmt.executeQuery(sql);
+      ResultSet rs = pstmt.executeQuery();
+      - 데이터 한건
+        if (rs.next()) {
+            System.out.println(rs.getString(번호 또는 컬럼명));
+            ...
+        } else System.out.println("없는 데이터 입니다);
+     - 여러건
+       while(rs.next() ) {
+	System.out.println(rs.getString(번호 또는 컬럼명));
+            ...
+       }
+       if (rs.next()) {
+           do {
+	System.out.println(rs.getString(번호 또는 컬럼명));
+              ...
+           } while(rs.next());
+      } else System.out.println("없는 데이터 입니다);
+     2) 입력/수정/삭제
+        int result = stmt.executeUpdate(sql);
+        int result = pstmt.executeUpadte();
+5. 정리
+   try {
+  	rs.close();
+  	stmt.close();
+   	pstmt.close();
+   	conn.close();
+   }catch(Exception e) {}
+6. pl/sql, stored procedure
+   String sql = "{call procedure명(값,....) }";
+   CallableStatement cs = conn.prepareCallable(sql);
+   cs.setInt(번호, 값);
+   cs.setString(번호, 값);
+  1) 수정, 삭제
+      int result= cs.executeUpdate();
+      if (result >0 ) 성공
+     else 실패
+  2) out으로 데이터 받을 때는
+     cs.execute();  
+
+URL  : uniform resource locator : 인터넷 주소
+도메인 -> DNS -> ip로 변경
+
+Web Server 요청(request)한 문서를 찾아서 html형태로 응답(response)
+Application Server 요청한 업무처리하여 결과를 보내줌
+                                   DB에 데이터를 저장/수정/삭제/조회하여 연산하는 것
+Web Server + Application Server : WAS
+
+tomcat과 oracle충돌 방지
+select dbms_xdb.gethttpport() from dual;
+exec dbms_xdb.sethttpport(9090);
+
+WAS
+-web logic :oracle
+-websphere:ibm
+-jeus: 

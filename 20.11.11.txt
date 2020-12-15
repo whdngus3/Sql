@@ -1,0 +1,127 @@
+declare
+    vi_num number;
+begin
+    vi_num:=100;
+    dbms_output.put_line(vi_num);
+end;
+
+set serverout on
+create or replace procedure pr
+is
+    num number;
+begin
+    num :=100;
+    dbms_output.put_line(num);
+end;
+/
+
+exec pr;
+
+
+create or replace procedure update_sal
+    (v_empno in number)
+is
+
+begin
+    update emp set sal = sal*1 where empno=v_empno;
+end;
+/
+
+
+
+select * from emp where empno=7499;
+
+exec update_sal(7499);
+
+create table emp01 as select * from emp;
+select * from emp01;
+
+create procedure del_emp (v_empno in number)
+is
+begin
+    delete from emp01 where empno=v_empno;
+end;
+/
+
+exec del_emp(7566);
+
+
+create or replace procedure dept_insert
+(v_deptno in number, v_dname in varchar2, v_loc in varchar2)
+is
+begin
+    insert into dept01 values(v_deptno,v_dname,v_loc);
+end;
+/
+
+
+create table dept01 as select * from dept;
+
+exec dept_insert(11,'홍보','인천');
+exec dept_insert(12,'야이','서울');
+
+select * from dept01;
+
+create or replace procedure dept_update
+(v_deptno in number, v_dname in varchar2, v_loc in varchar2)
+is
+    
+begin
+    update dept01 set dname=v_dname, loc=v_loc where deptno=v_deptno;
+end;
+/
+
+exec dept_update(10,'아잉','좋앟');
+
+select * from dept01;
+
+
+create or replace procedure sel_emp(v_empno in emp.empno%type)
+is
+    imsi_ename emp.ename%type;
+    imsi_sal emp.sal%type;
+begin
+    select ename, sal into imsi_ename, imsi_sal from emp where empno=v_empno;
+    dbms_output.put_line(' 이름:' ||imsi_ename);
+    dbms_output.put_line(' 급여:' ||imsi_sal);    
+end;
+/
+
+select * from emp;
+exec sel_emp(7499);
+
+
+
+create or replace procedure select_emp
+(v_empno in emp.empno%type)
+is
+    imsi_empno emp.empno%type;
+    imsi_sal emp.sal%type;
+    imsi_hiredate emp.hiredate%type;
+    imsi_job emp.job%type;
+begin
+    select empno, sal, hiredate,job into imsi_empno,imsi_sal,imsi_hiredate,imsi_job from emp where empno=v_empno;
+    dbms_output.put_line('사번: '||imsi_empno);
+    dbms_output.put_line('급여: '||imsi_sal);
+    dbms_output.put_line('고용일: '||imsi_hiredate);
+    dbms_output.put_line('업무: '||imsi_job);
+end;
+/
+
+exec select_emp(7499);
+
+
+select deptno, sum(sal), count(*) job from emp group by deptno having count(*)>5;
+select deptno, ename, sal from emp;
+
+select empno, ename, sal, (sal+nvl2(comm,comm,0))*12 as yearsal from emp;
+
+select ename, job, sal from emp where sal between 1500 and 3000;
+
+
+select ename from emp where ename like '_A%';
+
+select empno,ename,sal from emp where nvl(comm,0)=0 and job='MANAGER';
+
+select sum(sal), min(sal) from emp group by job
+

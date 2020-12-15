@@ -1,0 +1,50 @@
+@C:\oracle\EMP_EXAMPLE.sql
+
+
+column name format a10;
+desc department;
+
+
+select * from employees;
+column job
+
+
+select salary +300 from employee;
+select ename, salary, salary*12 from employee;
+
+
+
+select ename, salary, salary*12 + commission 연봉 from employee;
+select ename, salary, job, dno, nvl(commission,0) from employee;
+select ename, salary, salary*12 + commission 연봉 from employee;
+
+
+
+
+select sysdate from department;
+
+select * from employee where salary !=800;
+
+
+
+select * from department;
+select employee.dno, dname from employee, department where 10=department.dno;
+
+select * from employee where ename like 'J%';
+
+
+select * from employee where hiredate <='1981/01/01';
+select * from department where dno=10 or dno=20;
+
+select * from department where not dno=10;
+select * from employee where salary between 1000 and 1500;
+
+
+
+select ename, salary from employee where salary = (select max(salary) from employee);
+
+select * from employee where commission in (300,500);
+
+
+##제약조건 검색
+select * from all_constraints where table_name = 'employees';

@@ -1,0 +1,91 @@
+--클리어
+cl scr
+
+select ename, hiredate, to_char(hiredate,'yy-mm'), to_char(hiredate,'yyyy/mm/dd day') from employee;
+
+select ename, hiredate from employee where hiredate= to_date(19810220,'yyyymmdd');
+
+select * from employee where hiredate='80-12-17';
+
+select ename, salary ,commission, nvl2(commission, salary*12+commission, salary*12) from employee;
+
+select nullif('a','a'),nullif('a','b') from dual;
+
+select ename, dno, decode(dno,10,'accounting',20,'research',30,'sales',40,'operation','default')as dname from employee;
+
+
+------------------------------------------------------------
+create table b (sex int, gender char(20));
+insert into b values(1,'700000-1111111');
+insert into b values(2,'123123-2121211');
+insert into b values(3,'123123-3121211');
+
+select sex, decode(substr(gender,8,1),'1','man','2','woman','3','20man') as sex from b;
+
+select sex, case when sex=1 then'man' when sex=2 then 'woman' when sex=3 then '20man' else 'default' end as sex from b;
+select sex, case when substr(gender,8,1)='1' then 'man' when substr(gender,8,1)='2' then 'woman' else '20man' end as sex from b;
+
+
+
+
+select substr(hiredate,1,2) 년도, substr(hiredate,4,2)달 from employee;
+
+select * from employee where substr(hiredate,4,2)='04';
+
+select * from employee where mod(eno,2)=0;
+
+select hiredate, to_char(hiredate,'yy/mon/dd dy') from employee;
+
+select trunc(sysdate-to_date('2020/01/01','yyyy/mm/dd') from dual;
+
+select eno, ename, nvl2(manager,manager,0) as manager from employee;
+
+select eno,ename, job, salary, decode(job,'analyst',salary+200,'salesman',salary+180, 'manager',salary+150,'clerk',salary+100,salary)as update_salary from employee;
+
+
+select dno , job, count(*),sum(salary) from employee group by dno, job order by dno,job;
+
+select dno , job, count(*),sum(salary) from employee group by dno, job order by dno,job;
+
+
+select job,count(*), sum(salary) from employee where job not like 'MANAGER' group by job having sum(salary)>=5000 order by sum(salary);
+
+
+select max(salary) as Maximum, min(salary) as Minimum, sum(salary) as Sum, avg(salary) as Average from employee;
+
+select max(salary) as Maximum, min(salary) as Minimum, sum(salary) as Sum, round(avg(salary)) as Average from employee group by job;
+
+select job, count(*) from employee group by job;
+
+select count(*) from employee where job='MANAGER';
+
+select (max(salary)-min(salary)) as difference from employee;
+
+select job, min(salary) from employee group by job;
+
+select dno, count(*) as Number_of_People, round(avg(Salary),2) from employee group by dno;
+
+select decode(dno,10,'accounting',20,'research',30,'sales',40,'operations') as "dname", decode(dno,10,'new york',20,'dallas',30,'chicago',40,'boston') as "location", count(*), round(avg(salary)) from employee group by dno;
+
+
+
+select * from department a natural join employee b;
+
+select eno, ename, dname from employee, department where employee.dno=department.dno and eno=7788;
+
+select * from employee inner join department on employee.dno=department.dno where employee.eno like '__8_';
+
+
+select * from salgrade;
+
+select ename, salary, grade from employee, salgrade where salary between losal and hisal;
+
+select e.ename, m.ename from employee e, employee m where e.manager=m.eno;
+
+select * from (select rownum num,employee.* from employee) where num>=6 and num <=10;
+
+select ename, dno from employee where dno= (select dno from employee where ename='SCOTT');
+
+select distinct ename,a.dno from employee a, department b where a.dno = b.dno;
+
+select dno, min(salary) from employee group by dno;

@@ -1,0 +1,35 @@
+insert into dept values(10,'회계','인천');
+insert into dept values(20,'연구소','대전');
+insert into dept values(30,'영업','서울');
+insert into dept values(40,'운영','부산');
+
+
+select * from dept;
+
+load data infile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/EMP.txt' into table emp character set euckr;
+
+select * from emp;
+
+select empno,ename, sal from emp order by sal desc limit 5;
+
+ create SEQUENCE EMP_SEQ start with 1 increment by 1 maxvalue 100000;
+ 
+ create table emp01 ( empno number(4) primary key, ename varchar2(20), hiredate date);
+ 
+ insert into emp01 values (emp_seq.nextval,'나야',sysdate);
+ insert into emp01 values (emp_seq.nextval,'너야',sysdate);
+ 
+ select * from emp01;
+  
+ create index indx_dept_com on dept(deptno, dname);
+ 
+create synonym e for emp; --별명
+select * from e;
+ 
+
+
+
+
+
+exp scott/tiger file=c:/java/scott.dmp tables=emp.dept
+imp scott/tiger file=c:/java/scott.dmp tables=emp.dept

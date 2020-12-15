@@ -1,0 +1,42 @@
+sqlplus/as sysdba
+
+
+create user scott identified by tiger;
+
+
+grant dba to scott;
+
+select dbms_xdb.gethttpport() from dual;
+
+exec dbms_xdb.sethttpport(9090);
+
+conn scott/tiger
+
+@demobld_s
+
+
+
+
+select e.ename, e.sal, v.avg, e.deptno from emp e,(select deptno,round(avg(sal)) avg from emp group by deptno) v where e.deptno=v.deptno and sal >avg;
+
+select ename, sal from (select rownum num, ename, sal from (select* from emp order by sal desc)) where num<6;
+
+select ename, sal from (select rownum num, ename, sal from (select* from emp order by sal desc)) where num>=6 and num<=10;
+
+
+
+
+
+create database test default character set utf8;
+show databases;
+use test;
+create table dept( deptno int(2) primary key,
+dname varchar(20), loc varchar(20));
+
+create table emp(empno int(4) primary key, ename varchar(20), job varchar(20),
+mgr int(4), hiredate date, sal float(7,2), comm float(7,2),deptno int(2))
+
+
+insert into dept values(10,'회계','인천');
+i
+

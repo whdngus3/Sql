@@ -1,0 +1,86 @@
+create table gesipan(id number(3) , subject varchar2(200), content varchar2(2048),regdate date);
+
+
+create table dept( dno number(2), dname varchar2(50), loc varchar2(30));
+
+insert into dept values(1,'홍보부','1층');
+insert into dept values(2,'인사부','2층');
+insert into dept values(3,'경리부','3층');
+
+alter table dept add (remark varchar2 100);
+
+column loc format a20;
+
+alter table dept drop column remark;
+
+cl scr
+
+create table users(id number(6) not null primary key);
+
+
+
+
+
+create table customer(id varchar(20) not null, pwd varchar(20) not null , name varchar(20) not null,phone varchar(20), address varchar(20));
+
+
+create table emp( eno number(4) constraint emp_eno_pk2 primary key, ename varchar2(10), salary number(7,2) constraint emp_salary_min2 check(salary>0));
+
+select * from emp;
+
+insert into emp values(1,'hong',10);
+insert into emp values(1,'hong',10);
+
+drop table emp;
+
+
+create table dept_copy as select * from department;
+
+create table emp as select * from employee;
+
+alter table emp add constraint emp_eno_pk3 primary key(eno);
+alter table emp add constraint emp_dno_fk3 foreign key(dno) references dept_copy(dno);
+
+
+create table dept (dno number(2) constraint pk_dept2 primary key, dname varchar2(14), loc varchar2(13));
+
+select * from ALL_CONSTRAINTS;
+
+create view v_department as select * from department;
+select * from v_department;
+
+
+
+create view v_employee_department as select ename,job,dname from employee inner join department on employee.dno=department.dno;
+
+select * from v_employee_department;
+
+
+
+create view v_department as select * from department;
+select * from v_department;
+
+
+
+create view v_employee_department as select ename,job,dname from employee inner join department on employee.dno=department.dno;
+
+select * from v_employee_department;
+
+
+create view v_dept_01 as select * from department where dno=10;
+
+select * from department;
+
+delete from department where dno=60;
+
+select * from v_dept_01;
+insert into v_dept_01 values(60,'wew','asidd');
+create view v_dept_02 as select dno,dname from department;
+
+select * from v_dept_02;
+insert into v_dept_02 values(70,'qonewio');
+
+select rownum, employee.* from employee where rownum between 1 and 5;
+
+
+
